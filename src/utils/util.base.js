@@ -5,36 +5,39 @@
  **/
 
 /* js空值判断工具 */
+import {UtilUni} from "@/utils/util";
+
 export function Optional() {
-	this.val = null;
+    this.val = null;
 }
-Optional.of = function(value) {
-	const op = new Optional();
-	op.val = value;
-	return op;
+
+Optional.of = function (value) {
+    const op = new Optional();
+    op.val = value;
+    return op;
 }
 
 /**
  * 值是否有效
  * @return {boolean}
  */
-Optional.prototype.isPresent = function() {
-	if (this.val === 'null') {
-		return false;
-	} else if (typeof this.val === "number" && this.val === 0) {
-		return true;
-	}
-	return !!this.val;
+Optional.prototype.isPresent = function () {
+    if (this.val === 'null') {
+        return false;
+    } else if (typeof this.val === "number" && this.val === 0) {
+        return true;
+    }
+    return !!this.val;
 }
 
 /**
  * 值如果是有效的就调用回调函数
  * @param callBack
  */
-Optional.prototype.ifPresent = function(callBack) {
-	if (this.isPresent()) {
-		callBack && callBack();
-	}
+Optional.prototype.ifPresent = function (callBack) {
+    if (this.isPresent()) {
+        callBack && callBack();
+    }
 }
 
 /**
@@ -42,9 +45,31 @@ Optional.prototype.ifPresent = function(callBack) {
  * @param val
  * @return {*|null}
  */
-Optional.prototype.orElse = function(val) {
-	if (this.isPresent()) {
-		return this.val;
-	}
-	return val;
+Optional.prototype.orElse = function (val) {
+    if (this.isPresent()) {
+        return this.val;
+    }
+    return val;
+}
+
+/**
+ * 缓存操作
+ */
+export function CacheOptional() {
+    this.key = null;
+}
+
+CacheOptional.of = function (key) {
+    const self = new CacheOptional();
+    self.key = key;
+    return self;
+}
+CacheOptional.prototype.getItem = function () {
+    return UtilUni.CacheUtil.get().getItem(this.key);
+}
+CacheOptional.prototype.setItem = function (value) {
+    return UtilUni.CacheUtil.get().setItem(this.key, value);
+}
+CacheOptional.prototype.remove = function () {
+    return UtilUni.CacheUtil.get().remove(this.key);
 }

@@ -122,10 +122,10 @@ CacheUtil.prototype.getItem = function (key) {
                 if(result.data){
                     resolve(result.data);
                 }else{
-                    reject(result);
+                    resolve(result);
                 }
             },
-            fail: reject
+            fail: err => resolve(null)
         });
     })
 }
@@ -156,52 +156,6 @@ CacheUtil.prototype.remove = function (key) {
             success: resolve,
             fail: reject
         });
-    })
-}
-
-/**
- * 获取缓存
- * @param {string} key - 缓存键名
- * @return {Promise<unknown>}
- */
-CacheUtil.prototype.getSession = function (key) {
-    return new Promise((resolve, reject) => {
-        try{
-            const value = sessionStorage.getItem(key);
-            resolve(value)
-        }catch (err) {
-            reject(err)
-        }
-    })
-}
-/**
- * 设置缓存
- * @param {string} key - 缓存键名
- * @param value - 缓存对象
- */
-CacheUtil.prototype.setSession = function (key,value) {
-    return new Promise((resolve, reject) => {
-        try{
-            sessionStorage.setItem(key,value);
-            resolve()
-        }catch (err) {
-            reject(err)
-        }
-    })
-}
-
-/**
- * 删除缓存
- * @param {string} key - 缓存键名
- */
-CacheUtil.prototype.removeSession = function (key) {
-    return new Promise((resolve, reject) => {
-        try {
-            sessionStorage.removeItem(key);
-            resolve();
-        } catch (error) {
-            reject(error);
-        }
     })
 }
 
