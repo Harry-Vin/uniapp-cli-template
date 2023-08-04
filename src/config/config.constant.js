@@ -1,6 +1,10 @@
 const Constant = {
     // api请求前缀
-    HTTP_REQUEST_ORIGIN: 'https://baidu.com'
+    HTTP_REQUEST_ORIGIN: 'https://baidu.com',
+    // upload请求前缀
+    HTTP_UPLOAD_ORIGIN: 'https://baidu.com',
+    // 登录页路径
+    LOGIN_PAGE_PATH: '/pages/login/login'
 }
 
 const CacheKey = {

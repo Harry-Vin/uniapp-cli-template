@@ -44,18 +44,18 @@ const getRequestConfig = () => {
 // http 请求封装
 export const request = async (config = getRequestConfig()) => {
     try {
-        config = Object.assign({},getRequestConfig(),config);
+        config = Object.assign({}, getRequestConfig(), config);
         const _header = Object.assign({}, config.header);
 
         if (config.needToken) {
             const token = await config.getToken();
-            if(token){
+            if (token) {
                 _header.Authorization = token;
-            }else{
+            } else {
                 await ToastUtil.get().info("请登录后操作");
                 setTimeout(() => {
-                    NavUtil.get().reLaunch("/pages/login/login");
-                },2000)
+                    NavUtil.get().reLaunch(ConfigConstant.getInstance().getConstant().LOGIN_PAGE_PATH);
+                }, 2000)
                 return Promise.resolve(null);
             }
         }
@@ -114,7 +114,7 @@ const uploadFileConfig = () => {
         timeout: 0,
         formData: null,
         needToken: false, // 该请求是否需要token
-        urlPrefix: ConfigConstant.getInstance().getConstant().HTTP_REQUEST_ORIGIN, // url前缀
+        urlPrefix: ConfigConstant.getInstance().getConstant().HTTP_UPLOAD_ORIGIN, // url前缀
         useUrlPrefix: true, // 是否使用url前缀
         getToken: ConfigAction.getInstance().getToken
     }
@@ -127,18 +127,18 @@ const uploadFileConfig = () => {
  */
 export const uploadFile = async (config = uploadFileConfig()) => {
     try {
-        config = Object.assign({},uploadFileConfig(),config);
+        config = Object.assign({}, uploadFileConfig(), config);
         const _header = Object.assign({}, config.header);
 
         if (config.needToken) {
             const token = await config.getToken();
-            if(token){
+            if (token) {
                 _header.Authorization = token;
-            }else{
+            } else {
                 await ToastUtil.get().info("请登录后操作");
                 setTimeout(() => {
-                    NavUtil.get().reLaunch("/pages/login/login");
-                },2000)
+                    NavUtil.get().reLaunch(ConfigConstant.getInstance().getConstant().LOGIN_PAGE_PATH);
+                }, 2000)
                 return Promise.resolve(null);
             }
         }
